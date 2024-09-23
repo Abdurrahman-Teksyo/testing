@@ -40,10 +40,13 @@
                 if (file) {
                     const reader = new FileReader();
                     reader.onload = function(e) {
-                        html5QrcodeScanner.scanFile(file)
+                        const imgData = e.target.result;
+                        const html5QrCode = new Html5Qrcode("qr-reader");
+                        html5QrCode.scanFile(file)
                             .then(onScanSuccess)
                             .catch(err => {
                                 console.error("Error scanning file:", err);
+                                resultContainer.innerHTML = "Error scanning file.";
                             });
                     };
                     reader.readAsDataURL(file);
